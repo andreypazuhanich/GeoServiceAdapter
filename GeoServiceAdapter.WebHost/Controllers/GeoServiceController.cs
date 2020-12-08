@@ -23,9 +23,9 @@ namespace GeoServiceAdapter.WebHost.Controllers
         public async Task<IActionResult> Get(string location, string fileName, int frequencyPoints)
         {
             if (frequencyPoints < 1)
-                BadRequest($"{nameof(frequencyPoints)} is lesser than 1");
+                return BadRequest($"{nameof(frequencyPoints)} is lesser than 1");
             if (string.IsNullOrEmpty(location))
-                BadRequest($"{nameof(location)} должно быть заполнено");
+                return BadRequest($"{nameof(location)} должно быть заполнено");
 
             try
             {
