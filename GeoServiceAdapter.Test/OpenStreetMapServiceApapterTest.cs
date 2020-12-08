@@ -40,12 +40,24 @@ namespace GeoServiceAdapter.Test
             {
                 Location = "Черкасское поречное",
                 FileName = "Test",
-                FrequencyPoints = 10
+                FrequencyPoints = 4
             };
 
-            serviceAdapter.GetPoligon(request);
             
-            //Assert
+            var serializedPoints = serviceAdapter.GetSerializedPoints(request).Result;
+
+            string testResult = null;
+            if(File.Exists(@".\Files\test.txt"))
+            {
+                testResult = File.ReadAllText(@".\Files\test.txt");
+            }
+            
+            
+            var result = string.Equals(testResult.Replace(@"\s+",
+                string.Empty).Trim(), serializedPoints.Replace(@"\s+", string.Empty).Trim());
+            
+            Assert.True(result);
+
         }
         
     }

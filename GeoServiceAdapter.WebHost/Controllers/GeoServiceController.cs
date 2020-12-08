@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using GeoServiceAdapter.WebHost.Abstractions;
 using GeoServiceAdapter.WebHost.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -29,13 +30,19 @@ namespace GeoServiceAdapter.WebHost.Controllers
 
             try
             {
-                await adapter.GetPoligon(
+               var serializedPoints = await adapter.GetSerializedPoints(
                     new OpenStreetMapRequest()
                     {
                         Location = location,
                         FileName = fileName,
                         FrequencyPoints = frequencyPoints
                     });
+               
+                if(!string.IsNullOrEmpty(fileName))
+                    
+                    System.IO.File.WriteAllText(fileName,serializedPoints);
+                else
+                    System.IO.File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,location),serializedPoints);
             }
             catch (Exception ex)
             {

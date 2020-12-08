@@ -19,6 +19,10 @@
 
     <ItemGroup>
       <Folder Include="Files" />
+        <Content Include="Files\*">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
+    
 
 </Project>

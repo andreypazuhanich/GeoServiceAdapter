@@ -7,6 +7,6 @@ namespace GeoServiceAdapter.WebHost
 {
     public interface IGeoServiceAdapter<T> where T : GeoServiceRequest
     {
-        Task GetPoligon(T request);
+        Task<string> GetSerializedPoints(T request);
     }
 }

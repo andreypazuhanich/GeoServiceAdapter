@@ -21,7 +21,7 @@ namespace GeoServiceAdapter.WebHost
             HttpClient = httpClient;
         }
 
-        public async Task GetPoligon(OpenStreetMapRequest request)
+        public async Task<string> GetSerializedPoints(OpenStreetMapRequest request)
         {
             var response = await SendAsync(request.Location);
             
@@ -48,15 +48,11 @@ namespace GeoServiceAdapter.WebHost
                     resultPoints.Add(points);
             }
             
-            var serializedObjects = JsonConvert.SerializeObject(resultPoints, Formatting.Indented);
-            if(!string.IsNullOrEmpty(request.FileName))
-                File.WriteAllText(request.FileName,serializedObjects);
-            else
-                File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,request.Location),serializedObjects);
+            return JsonConvert.SerializeObject(resultPoints, Formatting.Indented);
         }
 
 
-        public List<JToken> SelectPointsRecursive(JToken token, int frequencyPoint)
+        private List<JToken> SelectPointsRecursive(JToken token, int frequencyPoint)
         {
             List<JToken> points = new List<JToken>();
             foreach (var item in token)
